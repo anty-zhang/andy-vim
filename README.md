@@ -134,15 +134,34 @@ molokai主题
 
 
 4. 可能遇到的问题:
-
-
-
+    vim 安装要支持Python，否则自动提示功能会不起作用。
+    未安装python支持异常信息：
+        YouCompleteMe unavailable: requires Vim compiled with Python 2.x support
+        UltiSnips requires py >= 2.7 or any py3
+    检查：
+        vim --version | grep python
+        +cryptv          +linebreak       +python          +viminfo
+        -cscope          +lispindent      -python3         +vreplace
+    安装：
+        ./configure -h | grep python
+          --enable-pythoninterp=OPTS   Include Python interpreter. default=no OPTS=no/yes/dynamic
+          --enable-python3interp=OPTS   Include Python3 interpreter. default=no OPTS=no/yes/dynamic
+          --with-python-config-dir=PATH  Python's config directory
+          --with-python3-config-dir=PATH  Python's config directory
+        [book@localhost vim74]$ ./configure --prefix=/opt/vim
 
     - 编译自动补全YouCompleteMe(耗时略长, 但绝对值得)
-
-
             cd ~/.vim/bundle/YouCompleteMe
             ./install.sh --clang-completer
+            
+            如果手动安装了clang和llvm，需要修改下面文件，则可编译过：
+            vim third_party/ycmd/cpp/ycm/CMakeLists.txt
+            将if ( USE_CLANG_COMPLETER AND 
+                 NOT USE_SYSTEM_LIBCLANG AND 
+                 NOT PATH_TO_LLVM_ROOT AND 
+                 NOT EXTERNAL_LIBCLANG_PATH )
+                 中的代码全部注释掉
+                然后设置set ( PATH_TO_LLVM_ROOT "/opt/llvm-3.6.2" )即可
 
 
 
