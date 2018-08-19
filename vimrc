@@ -1,4 +1,65 @@
 "==========================================
+" vim 窗口操作
+" http://lazybing.github.io/blog/2016/07/07/how-to-use-vim/
+"==========================================
+" vim -o file1 file2  # 水平打开多个窗口
+" vim -O file1 file2  # 垂直打开多个窗口
+" split  # 水平打开一个窗口，新窗口也是编辑当前文件
+" vsplit  # 水平打开一个窗口，新窗口也是编辑当前文件
+" split file1 # 打开一个水平窗口.新窗口打开是file1
+" vsplit file1 # 打开一个垂直窗口.新窗口打开是file1
+" q/close # 关闭当前窗口
+" only # 保留当前窗口，关闭所有其他窗口
+" qall # 退出所有窗口
+" wall  # 保存所有窗口
+" tabnew #打开一个页标签
+" tabnew file2 #打开一个页标签,并在标签中编辑file2
+" tabc #关闭当前的tab
+" tabo #关闭所有其他的tab
+" tabs #查看所有打开的tab
+" tabp #光标移到前一个tab
+" tabn #光标移到后一个tab
+
+" ctrl + w +  # 纵向扩大（行数增加）
+" ctrl + w -  # 纵向减少（行数减少）
+" res(ize) num  # 行数调整为num行
+" res(ize) + num # 当前高度增加num行
+" res(ize) - num # 当前高度减少num行
+" :vertical res(ize) num 指定当前窗口为num列
+" :vertical res(ize)+num 把当前窗口增加num列
+" :vertical res(ize)-num 把当前窗口减少num列
+
+" :shell 可以在不关闭vi的情况下切换到shell命令行
+" :exit 从shell回到vi
+
+"==========================================
+" vim 光标移动
+"==========================================
+" 3fx # 向右查找三次x的位置
+" Fx # 向左
+" tx # 命令会停在搜索的字符x前
+" Tx # 向左命令会停在搜索的字符x前
+" 3w # 向右移动 3 个单字
+" 3b # 向左移动 3 个单字
+
+"==========================================
+" vim 替换文本
+"==========================================
+" 简单替换表达式:[range]s/from/to/[flags]
+" range:搜索范围，如果没有指定范围，则作用于当前行。
+" :1,10s/from/to/表示在第 1 到第 10 行（包含第 1，第 10 行）之间搜索替换。
+" :10s/from/to/表示只在第 10 行搜索替换。
+" :%s/from/to/表示在所有行中搜索替换。
+" 1,$s/from/to/同上。
+" flags有如下四个选项：
+" cconfirm,每次替换前询问。
+" eerror,不显示错误。
+" gglobe,不询问，整行替换。如果不加g选项，则只替换每行的第一个匹配到的字符串。
+" iignore,忽略大小写。
+" 这些选项可以合并使用，如cgi表示不区分大小写，整行替换，替换前询问。
+
+
+"==========================================
 " Initial Plugin 加载插件
 "==========================================
 " install Vundle bundles
@@ -22,16 +83,19 @@ filetype plugin indent on
 "==========================================
 " General Setting
 "==========================================
-set runtimepath=~/.vim/,~/.vim/bundle,~/.vim/bundle/autoload,~/.vim/bundle/vim-colors-solarized,~/.vim/syntx,/etc/vim,/usr/share/vim/vimfiles,/usr/share/vim/addons,/opt/vim74/share/vim/vim74,~/.vim/after
+"set runtimepath=~/.vim/,~/.vim/syntax,~/.vim/bundle,~/.vim/bundle/autoload,~/.vim/bundle/vim-colors-solarized,~/.vim/syntx,/etc/vim,/usr/share/vim/vimfiles,/usr/share/vim/addons,/opt/vim74/share/vim/vim74,~/.vim/after,/usr/share/vim/vim73,/usr/share/vim/vim73/colors,/usr/local/Cellar/vim/8.1.0250/share/vim/vim81
+
+set runtimepath=~/.vim/,~/.vim/syntax,~/.vim/bundle,~/.vim/bundle/autoload,~/.vim/bundle/vim-colors-solarized,/usr/local/Cellar/vim/8.1.0250/share/vim/vim81,/usr/local/Cellar/vim/8.1.0250/share/vim/vim81/syntax
+
 syntax on                        "开启语法高亮
 "set guifont=Monaco:h20          "字体 && 字号
 set history=2000                 "history存储容量
-filetype on        		 "检测文件类型
+filetype on        		         "检测文件类型
 filetype indent on               "针对不同的文件类型采用不同的缩进格式
 filetype plugin on               "允许插件
 filetype plugin indent on        "启动自动补全
-set autoread          		 "文件修改之后自动载入。
-set shortmess=atI       	 "启动的时候不显示那个援助索马里儿童的提示
+set autoread          		     "文件修改之后自动载入。
+set shortmess=atI       	     "启动的时候不显示那个援助索马里儿童的提示
 
 " 备份,到另一个位置. 防止误删, 目前是取消备份
 "set backup
@@ -68,9 +132,9 @@ set selection=inclusive
 set selectmode=mouse,key
 " No annoying sound on errors
 " 去掉输入错误的提示声音
-set title                	" change the terminal's title
-set novisualbell		" don't beep
-set noerrorbells		" don't beep
+set title                	  " change the terminal's title
+set novisualbell		      " don't beep
+set noerrorbells		      " don't beep
 set t_vb=
 set tm=500
 
@@ -228,9 +292,17 @@ endif
 "==========================================
 " download http://www.vim.org/scripts/script.php?script_id=311
 " install 把grep.vim 文件放到 ~/.vim/plugin
-"Grep 按照指定的规则在指定的文件中查找
-"Rgrep 递归的grep
-"Bgrep 在所有打开的缓冲区中查找
+" Grep 按照指定的规则在指定的文件中查找
+" Rgrep 递归的grep
+" Bgrep 在所有打开的缓冲区中查找
+" :cc                显示详细错误信息 ( :help :cc )
+" :cp                跳到上一个错误 ( :help :cp )
+" :cn                跳到下一个错误 ( :help :cn )
+" :cl                列出所有错误 ( :help :cl )
+" :cw                如果有错误列表，则打开quickfix窗口 ( :help :cw )
+" :col               到前一个旧的错误列表 ( :help :col )
+" :cnew              到后一个较新的错误列表 ( :help :cnew ) 
+
 nnoremap <silent> <leader>ge :Grep<CR>
 nnoremap <silent> <leader>rg :Rgrep<CR>
 nnoremap <silent> <leader>bg :Bgrep<CR>
@@ -463,7 +535,7 @@ autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <
 
 " 定义函数AutoSetFileHead，自动插入文件头
 " c++的头还没有定义
-autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
+autocmd BufNewFile *.sh,*.py,*.cpp,*.c,*.h exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
     "如果文件类型为.sh文件
     if &filetype == 'sh'
@@ -474,8 +546,42 @@ function! AutoSetFileHead()
     if &filetype == 'python'
         call setline(1, "\#!/usr/bin/env python")
         call append(1, "\# encoding: utf-8")
+    elseif &filetype == 'sh'
+        call setline(1,"\#!/bin/bash")
+        call append(line("."), "")
+    elseif &filetype == 'ruby'
+        call setline(1,"#!/usr/bin/env ruby")
+        call append(line("."),"# encoding: utf-8")
+        call append(line(".")+1, "")
+    else
+        call setline(1, "/*************************************************************************")
+        call append(line("."),   "  > File Name: ".expand("%"))
+        call append(line(".")+1, "  > Author: ")
+        call append(line(".")+2, "  > Mail: ")
+        " call append(line(".")+3, "  > Created Time: ".strftime("%c"))
+        call append(line(".")+3, "  > Created Time: ".strftime("%Y-%m-%d %H:%M:%S"))
+        call append(line(".")+4, " ************************************************************************/")
+        call append(line(".")+5, "")
     endif
 
+    if expand("%:e") == 'cpp'
+        call append(line(".")+6, "#include <iostream>")
+        call append(line(".")+7, "using namespace std;")
+        call append(line(".")+8, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+6, "#include <stdio.h>")
+        call append(line(".")+7, "")
+    endif
+    if expand("%:e") == 'h'
+        call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H_")
+        call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H_")
+        call append(line(".")+8, "#endif")
+    endif
+    if &filetype == 'java'
+        call append(line(".")+6,"public class ".expand("%:r"))
+        call append(line(".")+7,"")
+    endif
 
     normal G
     normal o
@@ -532,6 +638,8 @@ endif
 "Vim的颜色主题在/usr/share/vim/vim73/colors文件夹里
 "vim后在normal模式下输入“：colorscheme”查看当前的主题
 syntax enable
+autocmd InsertLeave * se nocul
+autocmd InsertEnter * se cul
 "set background=dark
 "colorscheme solarized
 "colorscheme molokai
