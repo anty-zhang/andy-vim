@@ -57,42 +57,39 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 "代码自动补全
 "git clone https://github.com/Valloric/YouCompleteMe.git
 "=============================================================================
+Plugin 'Valloric/YouCompleteMe'
+"youcompleteme  默认tab  s-tab 和自动补全冲突
+"let g:ycm_key_list_select_completion=['<c-n>']
+let g:ycm_key_list_select_completion = ['<Down>']
+"let g:ycm_key_list_previous_completion=['<c-p>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+let g:ycm_use_ultisnips_completer = 1 "提示UltiSnips
+let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_key_detailed_diagnostics = '<leader>d'
+"let g:ycm_collect_identifiers_from_tag_files = 1              "使用ctags生成的tags文件
 
-"""""Bundle 'Valloric/YouCompleteMe'
-""""""youcompleteme  默认tab  s-tab 和自动补全冲突
-""""""let g:ycm_key_list_select_completion=['<c-n>']
-"""""let g:ycm_key_list_select_completion = ['<Down>']
-""""""let g:ycm_key_list_previous_completion=['<c-p>']
-"""""let g:ycm_key_list_previous_completion = ['<Up>']
-"""""let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
-"""""let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
-"""""let g:ycm_use_ultisnips_completer = 1 "提示UltiSnips
-"""""let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
-"""""let g:ycm_collect_identifiers_from_tags_files = 1
-"""""let g:ycm_key_detailed_diagnostics = '<leader>d'
-""""""let g:ycm_collect_identifiers_from_tag_files = 1              "使用ctags生成的tags文件
-"""""
-"""""" 跳转到定义处, 分屏打开
-"""""let g:ycm_goto_buffer_command = 'horizontal-split'
-"""""nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-""""""nnoremap <leader>jd: YcmCompleter GoToDefinition<CR>
-""""""nnoremap <leader>gd: YcmCompleter GoToDeclaration<CR>
-"""""
-""""""let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
-"""""" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-"""""" old version
-"""""if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-"""""    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
-"""""endif
-"""""" 直接触发自动补全 insert模式下
-"""""let g:ycm_key_invoke_completion = '<C-Space>'
-"""""" 黑名单,不启用
-"""""let g:ycm_filetype_blacklist = {
-"""""      \ 'tagbar' : 1,
-"""""      \ 'gitcommit' : 1,
-"""""      \}
-"""""
+" 跳转到定义处, 分屏打开
+let g:ycm_goto_buffer_command = 'horizontal-split'
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nnoremap <leader>jd: YcmCompleter GoToDefinition<CR>
+"nnoremap <leader>gd: YcmCompleter GoToDeclaration<CR>
 
+"let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
+" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
+" old version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+endif
+" 直接触发自动补全 insert模式下
+let g:ycm_key_invoke_completion = '<C-Space>'
+" 黑名单,不启用
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'gitcommit' : 1,
+      \}
 
 
 "=============================================================================
@@ -304,7 +301,7 @@ Plugin 'kana/vim-textobj-indent.git'
 " <c-d> to switch to filename only search instead of full path  # 在”完整路径匹配“ 和 ”文件名匹配“ 之间切换
 " <c-r> to switch to regexp mode # 在“字符串模式” 和 “正则表达式模式” 之间切换
 " <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split
-" 
+"
 
 Plugin 'kien/ctrlp.vim'
 let g:ctrlp_map = '<leader>p'
@@ -323,6 +320,8 @@ let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 
+
+"=============================================================================
 " ctrlp插件1 - 不用ctag进行函数快速跳转
 Plugin 'tacahiroy/ctrlp-funky'
 nnoremap <Leader>fu :CtrlPFunky<Cr>
